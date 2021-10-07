@@ -1,5 +1,4 @@
-
-# ### MISSION TO MARS 
+# Scraping 10.5.3
 
 # Import Splinter, BeautifulSoup, and Pandas
 from splinter import Browser
@@ -7,6 +6,7 @@ from bs4 import BeautifulSoup as soup
 import pandas as pd
 import datetime as dt
 from webdriver_manager.chrome import ChromeDriverManager
+
 
 def scrape_all():
     # Initiate headless driver for deployment
@@ -21,13 +21,13 @@ def scrape_all():
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "last_modified": dt.datetime.now(),
-        "hemisphere_image_urls": hemisphere_image_urls()
+        "last_modified": dt.datetime.now()
     }
 
     # Stop webdriver and return data
     browser.quit()
     return data
+
 
 def mars_news(browser):
 
@@ -55,6 +55,7 @@ def mars_news(browser):
         return None, None
 
     return news_title, news_p
+
 
 def featured_image(browser):
     # Visit URL
@@ -98,31 +99,8 @@ def mars_facts():
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html(classes="table table-striped")
 
-def hemisphere_image_urls(browser):
-    # Visit URL
-    url = 'https://marshemispheres.com/'
-
-    #Empty list
-    hemisphere_image_urls = []
-
-    for i in range(0,4):
-        hemisphere = {}
-        # Find the image and click 
-        browser.find_by_css('a.product-item img')[i].click()
-        # Find the link to image called Sample
-        browser.links.find_by_text('Sample')
-        #Find title 
-        # browser.find_by_tag('h3')[i].click()
-        # Find link
-        img_url = browser.links.find_by_text('Sample')
-        # Retrieve image url 
-        hemisphere['url'] = img_url['href']
-        # Add dict key-values to the list 
-        hemisphere_image_urls.append(hemisphere)
-        browser.back()
-    
-    return hemisphere_image_urls
-
 if __name__ == "__main__":
+
     # If running as script, print scraped data
     print(scrape_all())
+It's also a good idea at this 
